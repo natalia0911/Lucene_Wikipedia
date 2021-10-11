@@ -1,0 +1,19 @@
+
+
+https://www.baeldung.com/lucene-analyzers
+
+1. Indexado y búsqueda se puede hacer con lucene. 
+
+2. Se debe especificar el archivo de stopwords que se usará y 
+si se realizará extracción de raíces o no. 
+
+
+
+Notas:
+Investigar algoritmo de porter, eliminación de afijos.
+Snowbaall del stemmer en lucene.
+
+Preguntar donde se guarda el indice.
+Se puede hacer cualquier tipo de consulta?
+booleanas, vectoriales, frases, por proximidad, o con errores.
+
