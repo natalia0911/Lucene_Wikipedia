@@ -44,13 +44,20 @@ public class SearchFiles {
 
   /** Simple command-line based search demo. */
   public static void main(String[] args) throws Exception {
-    String usage =
+    /*
+      String usage =
       "Usage:\tjava org.apache.lucene.demo.SearchFiles [-index dir] [-field f] [-repeat n] [-queries file] [-query string] [-raw] [-paging hitsPerPage]\n\nSee http://lucene.apache.org/core/4_1_0/demo/ for details.";
     if (args.length > 0 && ("-h".equals(args[0]) || "-help".equals(args[0]))) {
       System.out.println(usage);
       System.exit(0);
     }
-
+    */
+    //PRUEBA ALAMBRADO
+    String[] argumentos = new String[2];
+    argumentos[0]= "-index";
+    argumentos[1]= "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\Ejemplo\\Geografia\\indexPRUEBA";
+    
+    
     String index = "index";
     String field = "contents";
     String queries = null;
@@ -59,26 +66,26 @@ public class SearchFiles {
     String queryString = null;
     int hitsPerPage = 10;
     
-    for(int i = 0;i < args.length;i++) {
-      if ("-index".equals(args[i])) {
-        index = args[i+1];
+    for(int i = 0;i < argumentos.length;i++) {
+      if ("-index".equals(argumentos[i])) {
+        index = argumentos[i+1];
         i++;
-      } else if ("-field".equals(args[i])) {
-        field = args[i+1];
+      } else if ("-field".equals(argumentos[i])) {
+        field = argumentos[i+1];
         i++;
-      } else if ("-queries".equals(args[i])) {
-        queries = args[i+1];
+      } else if ("-queries".equals(argumentos[i])) {
+        queries = argumentos[i+1];
         i++;
-      } else if ("-query".equals(args[i])) {
-        queryString = args[i+1];
+      } else if ("-query".equals(argumentos[i])) {
+        queryString = argumentos[i+1];
         i++;
-      } else if ("-repeat".equals(args[i])) {
-        repeat = Integer.parseInt(args[i+1]);
+      } else if ("-repeat".equals(argumentos[i])) {
+        repeat = Integer.parseInt(argumentos[i+1]);
         i++;
-      } else if ("-raw".equals(args[i])) {
+      } else if ("-raw".equals(argumentos[i])) {
         raw = true;
-      } else if ("-paging".equals(args[i])) {
-        hitsPerPage = Integer.parseInt(args[i+1]);
+      } else if ("-paging".equals(argumentos[i])) {
+        hitsPerPage = Integer.parseInt(argumentos[i+1]);
         if (hitsPerPage <= 0) {
           System.err.println("There must be at least 1 hit per page.");
           System.exit(1);
