@@ -1,19 +1,30 @@
-
+LINKS
 
 https://www.baeldung.com/lucene-analyzers
 
-1. Indexado y búsqueda se puede hacer con lucene. 
-
-2. Se debe especificar el archivo de stopwords que se usará y 
-si se realizará extracción de raíces o no. 
 
 
+TAREAS
 
-Notas:
-Investigar algoritmo de porter, eliminación de afijos.
-Snowbaall del stemmer en lucene.
+1. La indexación y búsqueda ya la tenemos.
+2. Hay que buscar una manera de pasarle cada documento.
+3. Se debe modificar el indice para que reciba partes del documento y no documentos por separado.
+4. Se debe modificar el indice para que indexe por partes, o sea, las a,h?,title, body, enlace.
+5. Pasarle stopwords y que descarte esas palabras.
+6. Modificar para que quite las etiquetas.
+7. Hacerle steamming a las palabras, investigar de la librería de lucene, sino por ultimo alguna
+   otra libreria o algoritmo.
+8. Utilizar diferentes tipos de consulta (Según se especifique)
+9. Poner 20 en el escalfón. (Ya esto está)
+10. Del escalafón, que puede ser un Jtable, se puede seleccionar un documento, y mostrarla en un 
+    navegador.
+11. No se almacena los documentos-paginas en el indice, solo información importante (No sé si ya es así).
+12. Mostrar en otro JTable, los enlaces que tenga una pagina seleccionada del escalafón.
+13. Hacer pruebas con las consultas dadas, con los diferentes colecciones.
 
-Preguntar donde se guarda el indice.
-Se puede hacer cualquier tipo de consulta?
+
+
+DUDAS
+
+¿Se puede hacer cualquier tipo de consulta?
 booleanas, vectoriales, frases, por proximidad, o con errores.
-
