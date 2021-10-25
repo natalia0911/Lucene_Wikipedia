@@ -8,6 +8,7 @@ package Model;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -36,7 +37,7 @@ public class Indexer {
         this.webPageManager = new WebPageManager();
     }
     
-    public void Index(String indexPath, String collectionPath, String Stopwords) throws IOException{
+    public void Index(String indexPath, String collectionPath, List<String> stopWords) throws IOException{
         
         //Empezar el tiempo en milisegundos
         long startTime = System.currentTimeMillis();
@@ -52,7 +53,7 @@ public class Indexer {
         this.indexWriter = new IndexWriter(indexDirectory, indexConfig);
         
         //Llama a agregar documentos
-        int documents = this.addDocuments(collectionPath,Stopwords);
+        int documents = this.addDocuments(collectionPath,stopWords);
         
         this.commit();
         this.close();
@@ -60,18 +61,17 @@ public class Indexer {
         //Cierra el tiempo que tardó en indexar
         long endTime = System.currentTimeMillis();
         
-        //Add Time result
         this.time = endTime - startTime;
-        System.out.println("Total Indexing _Time: " + this.time);
-        //Cuantity of indexed documents
+        System.out.println("Tiempo total indexando: " + this.time);
+        //Cantidad de docs indexados
         this.cuantityDocuments = documents;
        
     }
     
-    private int addDocuments(String collectionPath, String Stopwords) throws IOException{
+    private int addDocuments(String collectionPath, List<String> stopWords) throws IOException{
         //Toma las paginas web segun la ruta dada
         ArrayList<WebPage> webPages;
-        webPages = this.webPageManager.getWebPages(collectionPath,Stopwords); 
+        webPages = this.webPageManager.getWebPages(collectionPath,stopWords); 
       
         long startTime = System.currentTimeMillis();
         

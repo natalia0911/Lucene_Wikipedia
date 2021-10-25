@@ -29,21 +29,25 @@ public class WebPageManager {
     public WebPageManager() {}
     
     
-    
-    public ArrayList<WebPage> getWebPages(String dataFile,String stopWords) throws IOException{
-        ArrayList<HTMLFile> htmlTexts = getHTMLDocuments(dataFile);
-        return (getWebPagesList(htmlTexts, dataFile, stopWords));
-    }
-        
-    
     /**
-     * Retorna un arreglo de hileras, donde cada una es una linea del documento de HTML
-     * @param collection
-     * @param initialPosition
-     * @param endPosition
+     * Devuelve un arreglo de paginas web 
+     * @param dataFile
+     * @param stopWords
      * @return
      * @throws IOException 
      */
+    public ArrayList<WebPage> getWebPages(String dataFile,List<String> stopWords) throws IOException{
+        long startTime = System.currentTimeMillis();
+        ArrayList<HTMLFile> htmlTexts = getHTMLDocuments(dataFile);
+        long endTime = System.currentTimeMillis();
+        ArrayList<WebPage> webPages = getWebPagesList(htmlTexts, dataFile, stopWords);
+        System.out.println("Tiempo para tomar las paginas web: " + (endTime-startTime));
+        return webPages;
+    }
+        
+    /*
+     Retorna un arreglo de hileras, donde cada una es una linea del documento de HTML
+
     public ArrayList<String> getHTMLDocument(String collection, int initialPosition, int endPosition) throws IOException{
         String data = readFile(collection);
         String[] dataLines = data.split("\n");
@@ -60,7 +64,7 @@ public class WebPageManager {
         }
         return html;
     }
-    
+    */
  
     /**
      * Retorna los documentos HTML del txt tomando como referencia el inicio y final 
@@ -70,7 +74,7 @@ public class WebPageManager {
      * @throws IOException 
      */
     public ArrayList<HTMLFile> getHTMLDocuments(String filename) throws IOException{
-        long startTime = System.currentTimeMillis();
+        
 
         ArrayList<HTMLFile> htmlDocuments = new ArrayList<>();
         String data = readFile(filename);
@@ -92,16 +96,13 @@ public class WebPageManager {
             
             linePosition++;
         }
-        
-        long endTime = System.currentTimeMillis();
-        System.out.println("Tiempo en GetHTMLDocuments : " + (endTime-startTime));
-        
+
         return htmlDocuments;
     }
     
     
     
-    public ArrayList<WebPage> getWebPagesList(ArrayList<HTMLFile> htmlTexts, String dataPath, String stopWords){
+    public ArrayList<WebPage> getWebPagesList(ArrayList<HTMLFile> htmlTexts, String dataPath, List<String> stopWords){
         
         String title;
         String body;
@@ -134,11 +135,10 @@ public class WebPageManager {
             hText = hTagsBuilder.toString();
         
              
-           
-           
+            System.out.println("ANTES DEL STEAMMING Y STOPWORDS Etiquetas h: " + hText + "\n" );
+            System.out.println("ANTES DEL STEAMMING Y STOPWORDS Body: " + body + "\n" );
             
-            StopWordsFile sw = new StopWordsFile(stopWords);
-            List<String> list = sw.readTxt();
+        
 
             //Minusculas
             title = title.toLowerCase();
@@ -156,8 +156,8 @@ public class WebPageManager {
             hText = cleanText(hText);
             body = cleanText(body);
             //Quitar stopWords, de title y a no se quitan porque se necesitan tal cual
-            body = deleteStopWords(body, list);
-            hText = deleteStopWords(hText, list);
+            body = deleteStopWords(body, stopWords);
+            hText = deleteStopWords(hText, stopWords);
             //Steaming
             hText = stemmer(hText);
             body = stemmer(body);
@@ -165,11 +165,11 @@ public class WebPageManager {
             int startHTML = html.getInitialPosition();
             int endHTML = html.getEndPosition();
             //PRUEBAS
-            System.out.println("title LIMPIO " + title);
-            System.out.println("a LIMPIO " + aText);
-            System.out.println("h LIMPIO " + hText);
-            System.out.println("body LIMPIO " + body);
-            System.out.println("collections " + dataPath + "\n");
+            System.out.println("Title: " + title + "\n" );
+            System.out.println("Etiquetas a: " + aText + "\n" );
+            System.out.println("Etiquetas h: " + hText + "\n" );
+            System.out.println("Body: " + body + "\n" );
+            System.out.println("collections: " + dataPath + "\n" + "\n" + "\n");
             
             webPageList.add(new WebPage(body, aText, hText, title, startHTML, endHTML, dataPath));     
         }     

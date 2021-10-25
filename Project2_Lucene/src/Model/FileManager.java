@@ -19,9 +19,7 @@ import java.io.Serializable;
 
 public class FileManager implements Serializable{
     
-    public static String readFile(String path) 
-    throws FileNotFoundException, IOException
-    {  String str;
+    public static String readFile(String path) throws FileNotFoundException, IOException {  String str;
 
         try(BufferedReader bufferReader = new BufferedReader(new FileReader(path))) 
         {
@@ -39,9 +37,7 @@ public class FileManager implements Serializable{
         return str;
     }
        
-    public static void writeObject
-        (Object obj, String fileNamePath)
-    {
+    public static void writeObject (Object obj, String fileNamePath) {
         try{
             OutputStream fileName = new FileOutputStream(fileNamePath);
             OutputStream buffer = new BufferedOutputStream(fileName);
@@ -58,9 +54,7 @@ public class FileManager implements Serializable{
         
     }
     
-    public static Object 
-        readObject(String fileNamePath)
-    {
+    public static Object readObject(String fileNamePath) {
         try{
             InputStream fileName = new FileInputStream(fileNamePath);
             InputStream buffer = new BufferedInputStream(fileName);
