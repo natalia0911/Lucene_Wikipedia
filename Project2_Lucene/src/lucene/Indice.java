@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -17,14 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.LongPoint;
@@ -166,37 +160,8 @@ public class Indice {
           // field that is indexed (i.e. searchable), but don't tokenize 
           // the field into separate words and don't index term frequency
           // or positional information:
-          System.out.println("file toString------------------------------"); System.out.println(file.toString());
           Field pathField = new StringField("path", file.toString(), Field.Store.YES);
-          //doc.add(pathField);
-          
-          
-          
-          
-            ///AYUDA DIOSSSSS  ----- ESTA ES LA PARTE DE QUITAR STOPWORD, ENTONCES HAY QUE QUITAR EL TEXTO DUMMY Y PASARLE LO DEL DOC
-            StopWordsFile sf = new StopWordsFile("D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\StopWords.txt");
-        
-            final String text = "Esas mañas que tenemos tantas";
-            final List<String> stopWords = sf.readTxt(); //Filters the stopWords
-            final CharArraySet stopSet = new CharArraySet(stopWords, true);
-
-            try {
-                ArrayList<String> remaining = new ArrayList<String>();
-                Analyzer analyzer = new StandardAnalyzer(stopSet); // Filters stop words in the given "stopSet"
-                TokenStream tokenStream = analyzer.tokenStream("stopWords", new StringReader(file.toString()));  //new StringReader(text)
-                CharTermAttribute term = tokenStream.addAttribute(CharTermAttribute.class);
-                tokenStream.reset();
-                while(tokenStream.incrementToken()) {
-                    System.out.print("[" + term.toString() + "] ");
-                    remaining.add(term.toString());
-                }
-                tokenStream.close();
-                analyzer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-          //----------------------------------------------------------------------------------- FIN DE LO DE STOPWORDS
-          
+          doc.add(pathField);
           
 
           // Add the last modified date of the file a field named "modified".
@@ -206,13 +171,16 @@ public class Indice {
           // year/month/day/hour/minutes/seconds, down the resolution you require.
           // For example the long value 2011021714 would mean
           // February 17, 2011, 2-3 PM.
-          doc.add(new LongPoint("modified", lastModified));
+          Field longpoint = new LongPoint("modified", lastModified);
+          doc.add(longpoint);
 
           // Add the contents of the file to a field named "contents".  Specify a Reader,
-          // so that the text of the file is tokenized and indexed, but not stored.
+          // so that the text of the file is tokenized and indexed, but not stored. **
+          // Lo parte y crea archibo invertido y no es almacenado porque no se guarda el texto completo.
           // Note that FileReader expects the file to be in UTF-8 encoding.
           // If that's not the case searching for special characters will fail.
-          doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
+          Field text = new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)));
+          doc.add(text);
 
           if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
             // New index, so we just add the document (no old document can be there):

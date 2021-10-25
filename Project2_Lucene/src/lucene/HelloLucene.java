@@ -80,7 +80,7 @@ public class HelloLucene {
 
     private static void addDoc(IndexWriter w, String title, String isbn) throws IOException {
         Document doc = new Document();
-        doc.add(new TextField("title", title, Field.Store.YES));
+        doc.add(new TextField("title", title, Field.Store.YES));   //Esto para separar partes 
 
         // use a string field for isbn because we don't want it tokenized
         doc.add(new StringField("isbn", isbn, Field.Store.YES));

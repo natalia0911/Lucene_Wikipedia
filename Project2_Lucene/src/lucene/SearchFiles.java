@@ -55,7 +55,7 @@ public class SearchFiles {
     //PRUEBA ALAMBRADO
     String[] argumentos = new String[2];
     argumentos[0]= "-index";
-    argumentos[1]= "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\Ejemplo\\INDEX";
+    argumentos[1]= "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\INDEX";
     
     
     String index = "index";

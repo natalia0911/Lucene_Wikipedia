@@ -70,3 +70,43 @@ print(soup.get_text())
 # and they lived at the bottom of a well.
 #
 # ...
+
+
+import spacy
+import nltk
+from nltk import SnowballStemmer
+nlp = spacy.load("es_core_news_sm")
+
+def normalize(text):
+    doc = nlp(text)
+    words = [t.orth_ for t in doc if not t.is_punct | t.is_stop]
+    lexical_tokens = [t.lower() for t in words if len(t) > 3 and     
+    t.isalpha()]
+    return lexical_tokens
+
+spanishstemmer = SnowballStemmer("spanish")
+text = "Soy un texto que pide a gritos que lo procesen. Por eso yo canto, tú cantas, ella canta, nosotros cantamos, cantáis, cantan…"
+tokens = normalize(text) # crear una lista de tokens
+stems = [spanishstemmer.stem(token) for token in tokens]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
