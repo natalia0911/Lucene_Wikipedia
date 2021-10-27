@@ -101,11 +101,13 @@ public class TextPreparer {
         StringBuilder newText = new StringBuilder(text);
         
         ///startTime = System.currentTimeMillis();
-        String cleanText = Pattern.compile("(\\w*[^a-zñ|\\s]+\\w*)").matcher(newText).replaceAll("") + " ";  
+        //String cleanText = Pattern.compile("(\\w*[^a-zñ|\\s]+\\w*)").matcher(newText).replaceAll("") + " ";  
+        text = text.replaceAll("\\p{Punct}", "");
         //endTime = System.currentTimeMillis();
        // this.timeMakeItSpanish += (endTime-startTime);
         
-        return cleanText;
+        //return cleanText;
+        return text;
     }
     
     

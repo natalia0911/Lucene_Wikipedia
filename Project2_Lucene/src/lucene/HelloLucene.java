@@ -51,12 +51,26 @@ public class HelloLucene {
         addDoc(w, "The Art of Computer Science", "9900333X");
         w.close();
 
-        // 2. query
-        String querystr = args.length > 0 ? args[0] : "Gigabytes";
+        query("193398817",index);
+
+    }
+
+    private static void addDoc(IndexWriter w, String title, String isbn) throws IOException {
+        Document doc = new Document();
+        doc.add(new TextField("title", title, Field.Store.YES));   //Esto para separar partes 
+
+        // use a string field for isbn because we don't want it tokenized
+        doc.add(new StringField("isbn", isbn, Field.Store.YES));
+        w.addDocument(doc);
+    }
+    
+    private static void query(String querystr,Directory index) throws ParseException, IOException{
+            // 2. query
+        //String querystr = args.length > 0 ? args[0] : "Gigabytes";
 
         // the "title" arg specifies the default field to use
         // when no field is explicitly specified in the query.
-        Query q = new QueryParser("title", analyzer).parse(querystr);
+        Query q = new QueryParser("isbn",  new StandardAnalyzer()).parse(querystr);
 
         // 3. search
         int hitsPerPage = 10;
@@ -75,17 +89,7 @@ public class HelloLucene {
 
         // reader can only be closed when there
         // is no need to access the documents any more.
-        reader.close();
-    }
-
-    private static void addDoc(IndexWriter w, String title, String isbn) throws IOException {
-        Document doc = new Document();
-        doc.add(new TextField("title", title, Field.Store.YES));   //Esto para separar partes 
-
-        // use a string field for isbn because we don't want it tokenized
-        doc.add(new StringField("isbn", isbn, Field.Store.YES));
-        w.addDocument(doc);
-    }
+        reader.close();}
     
     
 }

@@ -49,16 +49,20 @@ public class Prueba {
         StopWordsFile sf = new StopWordsFile("D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\StopWords.txt");
         List<String> stopWords = sf.readTxt(); 
         
-        String indexPath = "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\INDEX";
-        String collectionPath = "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\h8\\h8.txt";
+        String indexPath = "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\INDEXh5";
+        String collectionPath = "D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\h5\\h5.txt";
         
         //ind.Index(indexPath, collectionPath, stopWords);
        
+        
+        ///*
         QuerySearcher searcher = new QuerySearcher();
-        ArrayList<Document> documents = searcher.Search(indexPath,"magnoel");
+        ArrayList<Document> documents = searcher.Search(indexPath,"tenistas de macedonia");
         for (Document doc: documents){
             System.out.println(doc);
         }
+        
+        //*/
         //System.out.println(EnumWebElements.TITLE.toString());    
             
             /*

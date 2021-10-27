@@ -135,8 +135,8 @@ public class WebPageManager {
             hText = hTagsBuilder.toString();
         
              
-            System.out.println("ANTES DEL STEAMMING Y STOPWORDS Etiquetas h: " + hText + "\n" );
-            System.out.println("ANTES DEL STEAMMING Y STOPWORDS Body: " + body + "\n" );
+            //System.out.println("ANTES DEL STEAMMING Y STOPWORDS Etiquetas h: " + hText + "\n" );
+            //System.out.println("ANTES DEL STEAMMING Y STOPWORDS Body: " + body + "\n" );
             
         
 
@@ -165,11 +165,13 @@ public class WebPageManager {
             int startHTML = html.getInitialPosition();
             int endHTML = html.getEndPosition();
             //PRUEBAS
+            /*
             System.out.println("Title: " + title + "\n" );
             System.out.println("Etiquetas a: " + aText + "\n" );
             System.out.println("Etiquetas h: " + hText + "\n" );
             System.out.println("Body: " + body + "\n" );
             System.out.println("collections: " + dataPath + "\n" + "\n" + "\n");
+            */
             
             webPageList.add(new WebPage(body, aText, hText, title, startHTML, endHTML, dataPath));     
         }     
