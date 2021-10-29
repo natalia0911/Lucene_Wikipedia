@@ -44,7 +44,7 @@ public class Prueba {
     public static void main(String[] args) throws IOException, ParseException{
         
      
-   
+        /*
         Indexer ind = new Indexer();
         StopWordsFile sf = new StopWordsFile("D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\StopWords.txt");
         List<String> stopWords = sf.readTxt(); 
@@ -62,10 +62,11 @@ public class Prueba {
             System.out.println(doc);
         }
         
+        */
         //*/
         //System.out.println(EnumWebElements.TITLE.toString());    
             
-            /*
+        /*
             Indexer ind = new Indexer();
             StopWordsFile sf = new StopWordsFile("D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\StopWords.txt");
             List<String> stopWords = sf.readTxt();
@@ -75,16 +76,16 @@ public class Prueba {
             + "lo terrible que sea este mundo!... ¡No importa que tan cruel sea! ¡¡Lucha!! (Eren Jagger) ñame xd";
             
             text = text.toLowerCase();
-            System.out.println(text + "\n");
+            //System.out.println(text + "\n");
             text = deteleAccents(text);
-            System.out.println(text + "\n");
+           // System.out.println(text + "\n");
             text = cleanText(text);
-            System.out.println(text + "\n");
+            //System.out.println(text + "\n");
             text = deleteStopWords(text, stopWords);
-            System.out.println(text + "\n");
+            //System.out.println(text + "\n");
             text = stemmer(text);
             System.out.println(text + "\n");
-            */
+           */
      
     }
 
