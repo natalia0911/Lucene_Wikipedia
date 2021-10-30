@@ -6,6 +6,11 @@
 package View;
  
 import Controller.GeneralController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 /**
@@ -16,14 +21,20 @@ public class QuerySearcherView extends javax.swing.JFrame {
     
     
     private GeneralController controller;
+    DefaultListModel<String> documents;
+    private String[] indexCollections;
+    private DefaultComboBoxModel indexCollectionModel;
+    
+    
     /**
      * Creates new form QuerySearcherView
      */
     public QuerySearcherView() {
-        
-        
-        initComponents();
         this.controller = GeneralController.getInstance();
+        this.documents = new DefaultListModel<>();
+        initComponents();
+        this.jList1.setModel(this.documents);
+        jScrollPane1.setViewportView(jList1);
     }
 
     /**
@@ -108,7 +119,7 @@ public class QuerySearcherView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(btnSearch)
                 .addGap(14, 14, 14))
         );
@@ -127,10 +138,20 @@ public class QuerySearcherView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         txtSelect.setText("Select");
+        txtSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSelectActionPerformed(evt);
+            }
+        });
 
         btnPrevious.setText("Previous");
 
         btnNext.setText("Next");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -169,10 +190,9 @@ public class QuerySearcherView extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,14 +213,33 @@ public class QuerySearcherView extends javax.swing.JFrame {
         // TODO add your handling code here:
         String index = txtIndex.getText();
         String busqueda = txtSearch.getText();
-        if(index != null & busqueda != null)
+        if(index != null & busqueda != null){
             controller.searchQuery(index,busqueda);
+            LoadPage();
+        }
         else{
             JOptionPane.showMessageDialog(null, "Ingrese datos validos");
         }
         
     }//GEN-LAST:event_btnSearchActionPerformed
-
+    
+    private void LoadPage(){
+        String[] newDocuments = controller.getDocumentAtPage();
+        this.documents.clear();
+        for(String doc : newDocuments){
+            this.documents.addElement(doc);
+        }
+    }
+    
+    public void updateIndexCollections(String[] indexes){
+        this.indexCollections = indexes;
+        if(this.indexCollectionModel == null) 
+            this.indexCollectionModel = new DefaultComboBoxModel(this.indexCollections);
+        this.indexCollectionModel.removeAllElements();
+        for(String index : indexes)
+            this.indexCollectionModel.addElement(index);
+    }
+    
     private void btnIndex1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndex1ActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser  = new JFileChooser();
@@ -208,12 +247,28 @@ public class QuerySearcherView extends javax.swing.JFrame {
          chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
         chooser.showSaveDialog(null);
         txtIndex.setText(chooser.getSelectedFile().getAbsolutePath());
+        
     }//GEN-LAST:event_btnIndex1ActionPerformed
 
     private void txtIndexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIndexActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIndexActionPerformed
 
+    private void txtSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSelectActionPerformed
+        // TODO add your handling code here:
+        try {
+            this.controller.openDocument(this.jList1.getSelectedIndex());
+        } catch (IOException ex) {
+            
+        }
+    }//GEN-LAST:event_txtSelectActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNextActionPerformed
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -254,10 +309,10 @@ public class QuerySearcherView extends javax.swing.JFrame {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JList<String> jList1;
+    public javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIndex;
     private javax.swing.JTextField txtIndex;
