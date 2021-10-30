@@ -9,10 +9,7 @@ import Model.EnumWebElements;
 import Model.Indexer;
 import Model.QuerySearcher;
 import Model.StopWordsFile;
-import static Model.TextPreparer.cleanText;
-import static Model.TextPreparer.deleteStopWords;
-import static Model.TextPreparer.deteleAccents;
-import static Model.TextPreparer.stemmer;
+import static Model.TextPreparer.*;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.Normalizer;
@@ -55,25 +52,25 @@ public class Prueba {
         //ind.Index(indexPath, collectionPath, stopWords);
        
         
-        ///*
+        
         QuerySearcher searcher = new QuerySearcher();
-        ArrayList<Document> documents = searcher.Search(indexPath,"tenistas de macedonia");
+        ArrayList<Document> documents = searcher.Search(indexPath,"REFERENCE:\"tenistas de macedonia\"");
         for (Document doc: documents){
             System.out.println(doc);
         }
-        
         */
-        //*/
+        
+       
         //System.out.println(EnumWebElements.TITLE.toString());    
             
-        /*
+     
             Indexer ind = new Indexer();
             StopWordsFile sf = new StopWordsFile("D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\StopWords.txt");
             List<String> stopWords = sf.readTxt();
             
             String text = "Désde que nacimos... Tódos nosotros... ¡Somos líbres! No importa que tan fuertes "
             + "sean quienes nos lo impidan...¡Lucha! ¡Si es por eso, no me importa morir! ¡No importa "
-            + "lo terrible que sea este mundo!... ¡No importa que tan cruel sea! ¡¡Lucha!! (Eren Jagger) ñame xd";
+            + "lo terrible que sea este mundo!... ¡No importa que tan cruel sea! ¡¡Lucha!! (Eren Jagger) ñame xd 2019 vida29 señora_vieja";
             
             text = text.toLowerCase();
             //System.out.println(text + "\n");
@@ -85,11 +82,20 @@ public class Prueba {
             //System.out.println(text + "\n");
             text = stemmer(text);
             System.out.println(text + "\n");
-           */
+            System.out.println("ESTO CON LO DE AQUELLA GENTE"+ "\n");
+            
+            text = text.toLowerCase();
+            System.out.println(text + "\n");
+            text = makeItSpanish(text);
+            System.out.println(text + "\n");
+            text = removeStopWords(text, stopWords);
+            System.out.println(text + "\n");
+            text = stemmer(text);
+            System.out.println(text + "\n");
+          
      
     }
 
-   
-   
+
     }      
 

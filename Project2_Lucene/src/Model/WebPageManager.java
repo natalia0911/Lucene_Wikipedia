@@ -6,10 +6,7 @@
 package Model;
 
 import static Model.FileManager.readFile;
-import static Model.TextPreparer.cleanText;
-import static Model.TextPreparer.deleteStopWords;
-import static Model.TextPreparer.deteleAccents;
-import static Model.TextPreparer.stemmer;
+import static Model.TextPreparer.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,19 +142,30 @@ public class WebPageManager {
             aText = aText.toLowerCase();
             hText = hText.toLowerCase();
             body = body.toLowerCase();
-            //Quitar acentos y dejar ñ
-            title = deteleAccents(title);
-            aText = deteleAccents(aText);
-            hText = deteleAccents(hText);
-            body = deteleAccents(body);
+            
             //Dejar solo palabras
             title = cleanText(title);
             aText = cleanText(aText);
             hText = cleanText(hText);
             body = cleanText(body);
+            
+            //Quitar acentos y dejar ñ
+            title = deteleAccents(title);
+            aText = deteleAccents(aText);
+            hText = deteleAccents(hText);
+            body = deteleAccents(body);
+            
+            //title = makeItSpanish(title);   //******
+            //aText = makeItSpanish(aText);   //******
+            //hText = makeItSpanish(hText);   //******
+            //body = makeItSpanish(body);     //******
+            
+
             //Quitar stopWords, de title y a no se quitan porque se necesitan tal cual
             body = deleteStopWords(body, stopWords);
             hText = deleteStopWords(hText, stopWords);
+            //body = removeStopWords(body, stopWords);  //******
+            //hText = removeStopWords(hText, stopWords);   //******
             //Steaming
             hText = stemmer(hText);
             body = stemmer(body);

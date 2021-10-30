@@ -8,6 +8,8 @@ package Model;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.Normalizer;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -108,6 +110,56 @@ public class TextPreparer {
         
         //return cleanText;
         return text;
+    }
+    
+    
+    
+    public static String makeItSpanish(String text) {
+        StringBuilder newText = new StringBuilder(text);
+        long startTime = System.currentTimeMillis();
+        replaceAccents(newText);
+        long endTime = System.currentTimeMillis();
+        //this.timeReplaceAcents += endTime - startTime;
+
+        startTime = System.currentTimeMillis();
+        String cleanText = Pattern.compile("(\\w*[^a-zñ|\\s]+\\w*)").matcher(newText).replaceAll("") + " ";
+        endTime = System.currentTimeMillis();
+        //this.timeMakeItSpanish += (endTime-startTime);
+
+        return cleanText;
+    }
+
+    public static void replaceAccents(StringBuilder cadena) {
+        HashMap<Character, Character> replacements;
+        replacements = new HashMap<Character, Character>();
+        replacements.put('á', 'a');
+        replacements.put('é', 'e');
+        replacements.put('í', 'i');
+        replacements.put('ó', 'o');
+        replacements.put('ú', 'u');
+        replacements.put('.', ' ');
+        replacements.put(',', ' ');
+        replacements.put(':', ' ');
+        replacements.put('(', ' ');
+        replacements.put(')', ' ');
+        for (int i = 0; i < cadena.length(); i++) {
+            if (replacements.containsKey(cadena.charAt(i))) {
+                cadena.setCharAt(i, replacements.get(cadena.charAt(i)));
+            }
+        }
+    }
+
+    public static String removeStopWords(String text, List<String> sw) {
+        StringBuilder cleanText = new StringBuilder();
+        //Set<String> stopwords = (Set<String>) sw;
+        Set<String> stopwords = new HashSet<>(sw);
+        String[] words = text.split(" ");
+        for (String word : words) {
+            if (!stopwords.contains(word)) {
+                cleanText.append(word).append(" ");
+            }
+        }
+        return cleanText.toString();
     }
     
     
