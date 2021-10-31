@@ -222,7 +222,12 @@ public class QuerySearcherView extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnSearchActionPerformed
-    
+   
+ 
+ /*
+    Agrega una pagina nueva 
+    a los documentos mostrados
+    */
     private void LoadPage(){
         String[] newDocuments = controller.getDocumentAtPage();
         this.documents.clear();
@@ -230,7 +235,9 @@ public class QuerySearcherView extends javax.swing.JFrame {
             this.documents.addElement(doc);
         }
     }
-    
+    /*
+     
+    */
     public void updateIndexCollections(String[] indexes){
         this.indexCollections = indexes;
         if(this.indexCollectionModel == null) 
@@ -239,7 +246,10 @@ public class QuerySearcherView extends javax.swing.JFrame {
         for(String index : indexes)
             this.indexCollectionModel.addElement(index);
     }
+    /*
+    Se pide la seleccion de donde se encuentra el indice 
     
+    */
     private void btnIndex1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIndex1ActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser  = new JFileChooser();
@@ -262,7 +272,10 @@ public class QuerySearcherView extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_txtSelectActionPerformed
-
+    /*
+    
+    
+    */
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNextActionPerformed
