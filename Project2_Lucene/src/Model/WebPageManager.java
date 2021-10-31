@@ -156,11 +156,11 @@ public class WebPageManager {
             hText = deteleAccents(hText);
             body = deteleAccents(body);
 
-            //Quitar stopWords, de title y a no se quitan porque se necesitan tal cual
+            //Quitar stopWords, de title y a no se quitan porque no se especifica
             body = deleteStopWords(body, stopWords);
             hText = deleteStopWords(hText, stopWords);
             
-            //Steaming
+            //Steaming, title y a no se le hace
             title = deteleAccents(title);
             hText = stemmer(hText);
             body = stemmer(body);

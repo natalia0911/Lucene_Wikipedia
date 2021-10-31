@@ -62,7 +62,7 @@ public class Indexer {
         long endTime = System.currentTimeMillis();
         
         this.time = endTime - startTime;
-        System.out.println("Tiempo total indexando: " + this.time);
+        System.out.println("Tiempo total en segundos indexando: " + getTime());
         //Cantidad de docs indexados
         this.cuantityDocuments = documents;
        
