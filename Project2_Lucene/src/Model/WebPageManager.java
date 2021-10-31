@@ -42,9 +42,16 @@ public class WebPageManager {
         return webPages;
     }
         
-    /*
-     Retorna un arreglo de hileras, donde cada una es una linea del documento de HTML
-
+    
+     
+    /**
+     * Retorna un arreglo de hileras, donde cada una es una linea del documento de HTML
+     * @param collection
+     * @param initialPosition
+     * @param endPosition
+     * @return
+     * @throws IOException 
+     */
     public ArrayList<String> getHTMLDocument(String collection, int initialPosition, int endPosition) throws IOException{
         String data = readFile(collection);
         String[] dataLines = data.split("\n");
@@ -61,7 +68,7 @@ public class WebPageManager {
         }
         return html;
     }
-    */
+    
  
     /**
      * Retorna los documentos HTML del txt tomando como referencia el inicio y final 
@@ -131,12 +138,6 @@ public class WebPageManager {
             }
             hText = hTagsBuilder.toString();
         
-             
-            //System.out.println("ANTES DEL STEAMMING Y STOPWORDS Etiquetas h: " + hText + "\n" );
-            //System.out.println("ANTES DEL STEAMMING Y STOPWORDS Body: " + body + "\n" );
-            
-        
-
             //Minusculas
             title = title.toLowerCase();
             aText = aText.toLowerCase();
@@ -154,33 +155,20 @@ public class WebPageManager {
             aText = deteleAccents(aText);
             hText = deteleAccents(hText);
             body = deteleAccents(body);
-            
-            //title = makeItSpanish(title);   //******
-            //aText = makeItSpanish(aText);   //******
-            //hText = makeItSpanish(hText);   //******
-            //body = makeItSpanish(body);     //******
-            
 
             //Quitar stopWords, de title y a no se quitan porque se necesitan tal cual
             body = deleteStopWords(body, stopWords);
             hText = deleteStopWords(hText, stopWords);
-            //body = removeStopWords(body, stopWords);  //******
-            //hText = removeStopWords(hText, stopWords);   //******
+            
             //Steaming
+            title = deteleAccents(title);
             hText = stemmer(hText);
             body = stemmer(body);
+            
             //Tomar el inicio y final del html
             int startHTML = html.getInitialPosition();
             int endHTML = html.getEndPosition();
-            //PRUEBAS
-            /*
-            System.out.println("Title: " + title + "\n" );
-            System.out.println("Etiquetas a: " + aText + "\n" );
-            System.out.println("Etiquetas h: " + hText + "\n" );
-            System.out.println("Body: " + body + "\n" );
-            System.out.println("collections: " + dataPath + "\n" + "\n" + "\n");
-            */
-            
+
             webPageList.add(new WebPage(body, aText, hText, title, startHTML, endHTML, dataPath));     
         }     
         return webPageList;

@@ -58,7 +58,7 @@ public class GeneralController {
     private WebPageManager webPageManager;
     private String indexPath;
     
-     ArrayList<Document> documents;
+    ArrayList<Document> documents;
     int documentsForPage;
     int page;
     int maxPages;

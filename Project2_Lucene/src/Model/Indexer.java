@@ -73,8 +73,6 @@ public class Indexer {
         ArrayList<WebPage> webPages;
         webPages = this.webPageManager.getWebPages(collectionPath,stopWords); 
       
-        //long startTime = System.currentTimeMillis();
-        
         //Iterar las paginas web para indizar su informacion
         for(WebPage webPage : webPages){
             //Document that is going to be indexed
@@ -100,10 +98,7 @@ public class Indexer {
             this.indexWriter.addDocument(doc);
             
         }
-       
-        
-        //long endTime = System.currentTimeMillis();
-        //System.out.println("Tiempo de indización: " + (endTime - startTime));
+      
         
         return webPages.size();
     }

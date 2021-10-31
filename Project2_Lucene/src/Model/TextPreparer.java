@@ -8,11 +8,7 @@ package Model;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.Normalizer;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
@@ -95,72 +91,22 @@ public class TextPreparer {
     }
     
     /**
-     * 
-     * @param text
+     * Quita los numeros del texto
+     * @param newtext
      * @return 
      */
     public static String cleanText(String text){
-        StringBuilder newText = new StringBuilder(text);
-        
-        ///startTime = System.currentTimeMillis();
-        //String cleanText = Pattern.compile("(\\w*[^a-zñ|\\s]+\\w*)").matcher(newText).replaceAll("") + " ";  
-        text = text.replaceAll("\\p{Punct}", "");
-        //endTime = System.currentTimeMillis();
-       // this.timeMakeItSpanish += (endTime-startTime);
-        
-        //return cleanText;
-        return text;
-    }
-    
-    
-    
-    public static String makeItSpanish(String text) {
-        StringBuilder newText = new StringBuilder(text);
-        long startTime = System.currentTimeMillis();
-        replaceAccents(newText);
-        long endTime = System.currentTimeMillis();
-        //this.timeReplaceAcents += endTime - startTime;
 
-        startTime = System.currentTimeMillis();
-        String cleanText = Pattern.compile("(\\w*[^a-zñ|\\s]+\\w*)").matcher(newText).replaceAll("") + " ";
-        endTime = System.currentTimeMillis();
-        //this.timeMakeItSpanish += (endTime-startTime);
-
-        return cleanText;
-    }
-
-    public static void replaceAccents(StringBuilder cadena) {
-        HashMap<Character, Character> replacements;
-        replacements = new HashMap<Character, Character>();
-        replacements.put('á', 'a');
-        replacements.put('é', 'e');
-        replacements.put('í', 'i');
-        replacements.put('ó', 'o');
-        replacements.put('ú', 'u');
-        replacements.put('.', ' ');
-        replacements.put(',', ' ');
-        replacements.put(':', ' ');
-        replacements.put('(', ' ');
-        replacements.put(')', ' ');
-        for (int i = 0; i < cadena.length(); i++) {
-            if (replacements.containsKey(cadena.charAt(i))) {
-                cadena.setCharAt(i, replacements.get(cadena.charAt(i)));
-            }
+        String newtext = "";
+        String[] parts = text.split(" ");   
+        for(int i=0; i< parts.length; i++){
+            boolean isNumeric = parts[i].chars().allMatch( Character::isDigit );
+            if (!isNumeric){
+                newtext += parts[i]+ " ";  
+            } 
         }
+        //newtext = newtext.replaceAll("\\p{Punct}", "");
+        return newtext;
     }
-
-    public static String removeStopWords(String text, List<String> sw) {
-        StringBuilder cleanText = new StringBuilder();
-        //Set<String> stopwords = (Set<String>) sw;
-        Set<String> stopwords = new HashSet<>(sw);
-        String[] words = text.split(" ");
-        for (String word : words) {
-            if (!stopwords.contains(word)) {
-                cleanText.append(word).append(" ");
-            }
-        }
-        return cleanText.toString();
-    }
-    
     
 }
