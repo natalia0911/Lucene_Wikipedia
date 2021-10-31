@@ -86,7 +86,9 @@ public class GeneralController {
        String path =  PathChooser.Choose();
        return path;
     }
-    
+    /*
+    Busca la consulta en el indice seleccionado
+    */
     public void searchQuery(String index,String busqueda){
       
         try {
@@ -109,7 +111,10 @@ public class GeneralController {
         
         
     }
-    
+    /*
+    Crea el indice
+    Parametros: ruta coleccion, ruta indice, ruta stopwords 
+    */
     public void createIndex(IndexerView vistaIndice,String collection, String index, String stopwords){
         Indexer ind = new Indexer();
         StopWordsFile sf = new StopWordsFile(stopwords);
@@ -125,6 +130,10 @@ public class GeneralController {
         searchView.setVisible(true);
         
     }
+    /*
+    Abre el documento seleccionado en la jList
+    segun el indice
+    */
     
       public void openDocument(int docPosition) throws IOException{
         String html = getDocument(docPosition);
@@ -136,6 +145,10 @@ public class GeneralController {
         System.out.println(htmlDir);
             
     }
+    /*
+    Da el html del documento 
+    usando el indice del doc
+    */
      public String getDocument(int docPosition) throws IOException{
         
         int docIndex = (documentsForPage*page) - (documentsForPage+1 - (docPosition+1));
@@ -147,6 +160,9 @@ public class GeneralController {
         return SearchHTMLDocument(doc);
     }
     
+    /*
+    Da el titulo de 20 docs 
+    */
     public String[] getDocumentAtPage(){
        String documents_20 = "";
        Document doc;
@@ -160,6 +176,9 @@ public class GeneralController {
         return documents_20.split("\n");
     }
     
+    /*
+    Busca el html del documento seleccionado
+    */
     private String SearchHTMLDocument(Document document) throws IOException{
      ArrayList<String> htmlLines = webPageManager.getHTMLDocument(
          document.getField(EnumWebElements.COLLECTION.toString()).stringValue(),
