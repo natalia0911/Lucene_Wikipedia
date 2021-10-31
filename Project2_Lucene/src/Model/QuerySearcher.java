@@ -49,7 +49,6 @@ public class QuerySearcher {
     }
     
     public ArrayList<Document> Search(String indexDirPath, String queryString) throws IOException, ParseException{
-        //START TIME
         
         long startTime = System.currentTimeMillis();
         
@@ -62,12 +61,15 @@ public class QuerySearcher {
             this.indexSearcher = new IndexSearcher(indexReader);
             //Do the query
             this.queryParser = new QueryParser(EnumWebElements.TEXT.toString(), new StandardAnalyzer());
-            TopDocs topDocs = this.DoQuery(queryString);
+            
+            this.query = queryParser.parse(queryString);
+            System.out.println("Searching for: " + query.toString(EnumWebElements.TEXT.toString()));
+            TopDocs topDocs =  indexSearcher.search(query, maxDocs);
+            
             queryDocs = topDocs.totalHits.value;
             totalDocs = this.indexReader.numDocs();
             maxDocs = (int) totalDocs;
-            //ENDTIME 
-            
+        
             //Return result of the query
             ArrayList<Document> docs = this.getDocuments(topDocs);
              
@@ -92,13 +94,7 @@ public class QuerySearcher {
         System.out.println("Documentos: " + documents.size());
         return documents;
     }
-    
-    private TopDocs DoQuery(String queryString) throws ParseException, IOException{
-        //Query string -> query syntax 
-        this.query = queryParser.parse(queryString);
-        return indexSearcher.search(query, maxDocs);
-    }
-    
+
     private boolean Exists(Directory dir) throws IOException{
         return DirectoryReader.indexExists(dir);
     }

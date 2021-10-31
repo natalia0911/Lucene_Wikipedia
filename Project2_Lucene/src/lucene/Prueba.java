@@ -27,6 +27,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryparser.classic.ParseException;
+
 /**
  *
  * @author Natalia
@@ -36,34 +37,24 @@ public class Prueba {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, ParseException{
-        
+    public static void main(String[] args) throws IOException, ParseException {
 
-        
         Indexer ind = new Indexer();
         StopWordsFile sf = new StopWordsFile("D:\\2 SEMESTRE 2021\\RIT\\PROYECTOS\\Proyecto 2\\Lucene_Wikipedia\\StopWords.txt");
-        List<String> stopWords = sf.readTxt(); 
-        
+        List<String> stopWords = sf.readTxt();
+
         String indexPath = "D:\\2 SEMESTRE 2021\\COLECCIONES\\INDICES\\Indice_h7";
         String collectionPath = "D:\\2 SEMESTRE 2021\\COLECCIONES\\COLECCIONES\\h3\\h3.txt";
-        
+
         //ind.Index(indexPath, collectionPath, stopWords);
-       
-        
-        
         QuerySearcher searcher = new QuerySearcher();
         //ArrayList<Document> documents = searcher.Search(indexPath,"tenistas de macedonia");
-        ArrayList<Document> documents = searcher.Search(indexPath,"alejandro AND magno");
-        for (Document doc: documents){
+        ArrayList<Document> documents = searcher.Search(indexPath, "alejandro AND magno");
+        for (Document doc : documents) {
             System.out.println(doc);
         }
-        
-       
-       
+
         //System.out.println(EnumWebElements.TITLE.toString());    
-            
-        
-        
         /*
         //PRUEBAS DE STOPWORDS, STEAMING Y LIMPIEZA DE TEXTO
             Indexer ind = new Indexer();
@@ -88,11 +79,7 @@ public class Prueba {
             text = stemmer(text);
             System.out.println(text + "\n");
 
-      */
-     
+         */
     }
 
-   
-   
-    }      
-
+}
